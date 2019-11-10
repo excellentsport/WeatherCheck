@@ -45,11 +45,11 @@ wind_speed = weather_data_daily.get('windSpeed')
 precip_chance = weather_data_daily.get('precipProbability')
 
 alert_message = alert_message + \
-'Current Conditions: ' + summary_current + '\n' + 'Current Temp: ' + str(temp_current) + ' degrees' + '\n' + 'High Temp: ' + str(temp_high) + ' degrees' + '\n' + 'LowTemp: ' + str(temp_low) + ' degrees'  + '\n' + 'Average Wind Today: ' + str(wind_speed) + ' mph'  + '\n' + 'Chance of Rain: ' + str(precip_chance)
+'Current Conditions: ' + summary_current + '\n' + 'Current Temp: ' + str(temp_current) + ' degrees' + '\n' + 'High Temp: ' + str(temp_high) + ' degrees' + '\n' + 'Low Temp: ' + str(temp_low) + ' degrees'  + '\n' + 'Average Wind Today: ' + str(wind_speed) + ' mph'  + '\n' + 'Chance of Rain: ' + str(precip_chance)
 
 close_option = console.alert('Weather Conditions', alert_message, 'Open Dark Sky', 'Close', hide_cancel_button=True)
 
 if close_option == 1:
-    #open dark sky app
+    #open dark sky app using URL scheme- could be mofified for any weather app
     webbrowser.open('darksky://')
 
