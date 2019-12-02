@@ -1,14 +1,18 @@
 #! python3
 # WeatherCheck.py - grabs weather for current location
 
-import requests, time, wc_config
+import requests, time, wc_config, ast
 
 current_time = int(time.time())
 
-lat_long_dict = {
-    'latitude':wc_config.default_latitude,
-    'longitude':wc_config.default_longitude}
+data = requests.get('http://ipinfo.io')
+loc_dict = ast.literal_eval(data.text)
 
+lat_long_dict = {
+    'latitude':loc_dict.get('loc').split(',')[0],
+    'longitude':loc_dict.get('loc').split(',')[1].strip()}
+
+city_state = loc_dict.get('city') + ', ' + loc_dict.get('region')
 
 res = requests.get('https://api.darksky.net/forecast/' + wc_config.api_key + \
     '/' + str(lat_long_dict.get('latitude')) + ',' + \
@@ -28,7 +32,7 @@ temp_low = weather_data_daily.get('temperatureLow')
 wind_speed = weather_data_daily.get('windSpeed')
 precip_chance = weather_data_daily.get('precipProbability')
 
-print('Current Conditions: ' + summary_current)
+print('Current Conditions for ' + city_state + ':\n' + summary_current)
 print('Current Temp: ' + str(temp_current) + ' degrees')
 print('High Temp: ' + str(temp_high) + ' degrees')
 print('Low Temp: ' + str(temp_low) + ' degrees')
